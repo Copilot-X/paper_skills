@@ -1,87 +1,59 @@
 {
- "material_missing_objects": [
-  "Appendix A",
-  "Appendix B",
-  "Appendix C",
-  "Appendix F",
-  "Appendix H",
-  "Table 2",
-  "Table 5"
- ],
- "material_truncated": true,
- "rows": 42,
- "items_covered": 26,
- "items_total": 26,
- "status_counts": {
-  "partial": 15,
-  "not_in_material": 13,
-  "reported": 13,
-  "conflicting": 1
- },
- "item_status": {
-  "M1": "partial",
-  "M2": "not_in_material",
-  "M3": "not_in_material",
-  "M4": "reported",
-  "D1": "partial",
-  "D2": "not_in_material",
-  "D3": "not_in_material",
-  "D4": "partial",
-  "P1": "reported",
-  "P2": "not_in_material",
-  "P3": "not_in_material",
-  "P4": "partial",
-  "P5": "partial",
-  "P6": "reported",
-  "E1": "partial",
-  "E2": "partial",
-  "E3": "not_in_material",
-  "E4": "not_in_material",
-  "R1": "not_in_material",
-  "R2": "partial",
-  "R3": "partial",
-  "A1": "partial",
-  "A2": "reported",
-  "T1": "not_in_material",
-  "T2": "reported",
-  "X1": "not_in_material"
- },
- "problems": [
-  {
-   "row": "D2c",
-   "problem": "reported value relies on ['Appendix A'], which is not in the material; mark it partial and say it cannot be verified"
-  },
-  {
-   "row": "T1c",
-   "problem": "reported value relies on ['Table 2'], which is not in the material; mark it partial and say it cannot be verified"
-  },
-  {
-   "row": "report.md",
-   "problem": "says 'not reported' although the material is incomplete; say whether it is missing from the file: 2. 评测 grader 的身份和版本：主结果只说由 \"external grader\" 打分 [E1, p.3]，Figure 2 用的是 \"benchmark's rubric grades\" [E2, p.2]，主表用什么判官未报告。"
-  },
-  {
-   "row": "report.md",
-   "problem": "says 'not reported' although the material is incomplete; say whether it is missing from the file: Lite 是怎么构造的、包含多少任务也没写 | high |"
-  },
-  {
-   "row": "report.md",
-   "problem": "says 'not reported' although the material is incomplete; say whether it is missing from the file: | 可以调用闭源前沿 API（Claude / Gemini / GPT） | 生成器和验证器都是 Gemini 3.5 Flash 或 Claude Opus 4.8 | [M1, p.3] | 模型可以对上，但版本和快照未报告。"
-  },
-  {
-   "row": "report.md",
-   "problem": "says 'not reported' although the material is incomplete; say whether it is missing from the file: | 8×H200 | 未报告算力 [R1] | — | 推断：复现不需要 GPU；"
-  },
-  {
-   "row": "report.md",
-   "problem": "says 'not reported' although the material is incomplete; say whether it is missing from the file: 验证器每任务成本未报告；"
-  },
-  {
-   "row": "report.md",
-   "problem": "says 'not reported' although the material is incomplete; say whether it is missing from the file: 5. **成功阈值（假设，因为论文未报告方差 [E3]）：**"
-  },
-  {
-   "row": "report.md",
-   "problem": "says 'not reported' although the material is incomplete; say whether it is missing from the file: ## 7. 事实 / 推断 / 未报告"
-  }
- ]
+"material_missing_objects": [
+"Appendix A",
+"Appendix B",
+"Appendix C",
+"Appendix F",
+"Appendix H",
+"Table 2",
+"Table 5"
+],
+"material_truncated": true,
+"rows": 42,
+"items_covered": 26,
+"items_total": 26,
+"status_counts": {
+"partial": 15,
+"not_in_material": 13,
+"reported": 13,
+"conflicting": 1
+},
+"problems": [
+{
+"row": "D2c",
+"problem": "reported value relies on ['Appendix A'], which is not in the material; mark it partial and say it cannot be verified"
+},
+{
+"row": "T1c",
+"problem": "reported value relies on ['Table 2'], which is not in the material; mark it partial and say it cannot be verified"
+},
+{
+"row": "report.md",
+"problem": "says 'not reported' although the material is incomplete; say whether it is missing from the file: 2. 评测 grader 的身份和版本：主结果只说由 \"external grader\" 打分 [E1, p.3]，Figure 2 用的是 \"benchmark's rubric grades\" [E2, p.2]，主表用什么判官未报告。"
+},
+{
+"row": "report.md",
+"problem": "says 'not reported' although the material is incomplete; say whether it is missing from the file: Lite 是怎么构造的、包含多少任务也没写 | high |"
+},
+{
+"row": "report.md",
+"problem": "says 'not reported' although the material is incomplete; say whether it is missing from the file: | 可以调用闭源前沿 API（Claude / Gemini / GPT） | 生成器和验证器都是 Gemini 3.5 Flash 或 Claude Opus 4.8 | [M1, p.3] | 模型可以对上，但版本和快照未报告。"
+},
+{
+"row": "report.md",
+"problem": "says 'not reported' although the material is incomplete; say whether it is missing from the file: | 8×H200 | 未报告算力 [R1] | — | 推断：复现不需要 GPU；"
+},
+{
+"row": "report.md",
+"problem": "says 'not reported' although the material is incomplete; say whether it is missing from the file: 验证器每任务成本未报告；"
+},
+{
+"row": "report.md",
+"problem": "says 'not reported' although the material is incomplete; say whether it is missing from the file: 5. **成功阈值（假设，因为论文未报告方差 [E3]）：**"
+},
+{
+"row": "report.md",
+"problem": "says 'not reported' although the material is incomplete; say whether it is missing from the file: ## 7. 事实 / 推断 / 未报告"
+}
+]
 }

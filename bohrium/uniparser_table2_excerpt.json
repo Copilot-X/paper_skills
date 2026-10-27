@@ -1,0 +1,33 @@
+{
+ "command": "bohr pdf parse --file veriharness_2610.00972v1.pdf --table 2 --textual 1 --sync --payment-source photon ; bohr pdf result <token>",
+ "cli": "Bohrium CLI 2.9.5 (@dptech-corp/bohr-cli)",
+ "input_sha256": "a031033e46ea52c833a2f3d4f3588ba2ee5f332fe027c026c1495bfa31d50969",
+ "parse_meta": {
+  "status": "success",
+  "page_count": 28,
+  "charged_amount": "1.40",
+  "billing_status": "paid",
+  "proc_table": 7,
+  "total_table": 7,
+  "model_version": "default"
+ },
+ "task_token": "8542bdd9-529a-4a16-844a-b7ca9efbb2be",
+ "table2_header": "| Method | Avg | APEX | WSB | WorkBuddy | SB-2 | JobBench |",
+ "table2_rows": {
+  "single_rollout": [
+   "| Single rollout | 47.2 | 48.1 | 56.5 | 73.2 | 27.3 | 30.9 |",
+   "| Single rollout | 49.6 | 35.8 | 60.5 | 79.0 | 30.1 | 42.8 |",
+   "| Single rollout | 47.2 | 48.1 | 56.5 | 73.2 | 27.3 | 30.9 |",
+   "| Single rollout | 49.6 | 35.8 | 60.5 | 79.0 | 30.1 | 42.8 |"
+  ],
+  "veriharness_select": [
+   "| VERIHARNESS (select) | 51.6 | \\(53.3 \\pm 1.2\\) | \\(62.0 \\pm 0.9\\) | \\(77.8 \\pm 1.4\\) | \\(31.5 \\pm 2.4\\) | \\(33.5 \\pm 1.8\\) |",
+   "| VERIHARNESS (select) | 53.7 | \\(41.2 \\pm 0.7\\) | \\(65.0 \\pm 0.5\\) | \\(83.0 \\pm 0.4\\) | \\(33.4 \\pm 1.2\\) | \\(46.1 \\pm 0.8\\) |"
+  ]
+ },
+ "ocr_quirks_seen": {
+  "page_header_ocr": "\\begin{pageheader} Googlk e \\end{pageheader} <hline> \\begin{pageheader} 2026-10-02 \\end{pageheader} <watermark> \\beg",
+  "title_ocr": "VERiHARNEs s: Scaling Agentic Verification for Long-Horizon Tasks"
+ },
+ "note": "Verbatim excerpt (padding spaces collapsed) of the real Uni-Parser result; the full 103,875-character output is not included because of the 240 KiB material limit."
+}

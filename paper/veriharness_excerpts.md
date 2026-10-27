@@ -44,6 +44,62 @@ takes the highest-scoring rollout per task under the benchmark grader and bounds
 fixed pool; it does not bound revision. SB-2: SpreadsheetBench 2; WSB: Workspace-Bench Lite.
 ```
 
+## p.8 · 表 2 中 select 相关行（逐行原样提取）
+
+PyMuPDF 把表格拆成一格一行。列的顺序与表头一致：Avg、APEX、WSB、WorkBuddy、SB-2、JobBench。下面是 Flash 和 Opus 的 single rollout 行与 VeriHarness (select) 行，以及紧随其后的 "gain over single rollout" 行。
+
+```text
+Gemini 3.5 Flash
+Single rollout
+47.2
+48.1
+56.5
+73.2
+27.3
+30.9
+...
+VeriHarness (select)
+51.6
+53.3 ±1.2
+62.0 ±0.9
+77.8 ±1.4
+31.5 ±2.4
+33.5 ±1.8
+gain over single rollout
++4.4
++5.2
++5.5
++4.6
++4.2
+...
+Claude Opus 4.8
+Single rollout
+49.6
+35.8
+60.5
+79.0
+30.1
+42.8
+...
+VeriHarness (select)
+53.7
+41.2 ±0.7
+65.0 ±0.5
+83.0 ±0.4
+33.4 ±1.2
+46.1 ±0.8
+gain over single rollout
++4.1
++5.4
++4.5
++4.0
++3.3
+```
+
+读法（作者判断）：Flash 的 select 平均分是 51.6，比单 rollout 的 47.2 高 4.4；Opus 的 select 平均分是 53.7，比单 rollout 的 49.6 高 4.1。摘要里的 6.2 / 6.4 是表中另一组 "With revision" 的结果。
+
+（对照：玻尔 Uni-Parser 把同一张表还原成了 Markdown 表格行，例如 "| VERIHARNESS (select) | 51.6 | \(53.3 \pm 1.2\) | ..."，见 §6。）
+
 ## p.19 · 附录 A：temperature zero 只用于离线分析
 
 ```text
