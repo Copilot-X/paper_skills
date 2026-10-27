@@ -1,0 +1,30 @@
+{
+ "run_id": "A2-without",
+ "case_id": "A",
+ "condition": "without_skill",
+ "started_at": "2026-10-27T10:53:58+00:00",
+ "wall_seconds": 694.7,
+ "exit_code": 0,
+ "claude_code_version": "2.1.309 (Claude Code)",
+ "model_requested": "claude-opus-5-5",
+ "model_reported": "claude-opus-5-5",
+ "effort": "high",
+ "budget_usd": 5.0,
+ "tools": [
+  "Bash",
+  "Read",
+  "Write",
+  "Edit",
+  "Glob",
+  "Grep",
+  "Skill"
+ ],
+ "skills_visible": [
+  "(no repro-config-auditor)"
+ ],
+ "result_subtype": "success",
+ "num_turns": 9,
+ "total_cost_usd_reported_by_claude_code": 1.7862,
+ "cost_note": "total_cost_usd is Claude Code's client-side estimate at list price; the API is reached through a third-party proxy whose actual billing is not available to us.",
+ "output_tokens": 68931
+}

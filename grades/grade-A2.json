@@ -1,0 +1,443 @@
+{
+ "reports": {
+  "X": {
+   "items": {
+    "G1": {
+     "score": 2,
+     "reason": "[M1,p.7][M2,p.20] 同模型 Gemini 3.5 Flash / Claude Opus 4.8，thinking level high，与原文一致"
+    },
+    "G2": {
+     "score": 2,
+     "reason": "M1 明确'未给 API 快照/模型版本日期'，R3 明确'API 调用的日期区间均未给'"
+    },
+    "G3": {
+     "score": 2,
+     "reason": "M2 指出未给 temperature/top-p；M2b 指出 temperature zero 仅见附录 A 离线分析 p.19，不适用于验证器"
+    },
+    "G4": {
+     "score": 2,
+     "reason": "M3 标为未报告（max tokens、轮数、超时），并引 p.5 停止由模型自行判断"
+    },
+    "G5": {
+     "score": 2,
+     "reason": "D1/D1c/D1b：五个基准、APEX v1.0 [p.20]、WSB 100 题 Lite 子集 [p.20]"
+    },
+    "G6": {
+     "score": 2,
+     "reason": "D2 [p.7] 480/100/200/321/65 正确"
+    },
+    "G7": {
+     "score": 2,
+     "reason": "D3 [p.20] code/office/web 80/50/70，不跑 security（API 安全告警）"
+    },
+    "G8": {
+     "score": 2,
+     "reason": "D2b N=10 [p.7]；P2 同一冻结池、同一模型 [p.7]"
+    },
+    "G9": {
+     "score": 2,
+     "reason": "P4e [p.20] 四类脚手架全部正确"
+    },
+    "G10": {
+     "score": 2,
+     "reason": "A1/D4 [p.22]：HF caiqizh/veriharness、github google-research/veriharness；池不含基准内容需从原基准获取"
+    },
+    "G11": {
+     "score": 2,
+     "reason": "P4/P4b [p.21]：pi coding agent（MIT）薄层、本地 LiteLLM；只读、无网络、仅输出目录可写"
+    },
+    "G12": {
+     "score": 2,
+     "reason": "P4c [p.24] 七个工具、write/edit 限输出目录；P4b 表格渲染为单元格文本 [p.21]"
+    },
+    "G13": {
+     "score": 2,
+     "reason": "P2b [p.24] 18 个技能 6/4/3/5；P3 指出技能表只有名称/适用对象/脚本名"
+    },
+    "G14": {
+     "score": 1,
+     "reason": "P1 [p.6] 写了并发、互不可见、新上下文裁决；但未提'在裁决上下文中交付'，也未提算法 1"
+    },
+    "G15": {
+     "score": 2,
+     "reason": "P3 明确验证器/resolver/challenger/裁决指令全文未在论文中给出"
+    },
+    "G16": {
+     "score": 2,
+     "reason": "P5/P5b/P5c [p.21,p.27] 五种基线定义正确，含 agentic verifier 同沙箱同工具、单一评分指令、无协议无技能"
+    },
+    "G17": {
+     "score": 2,
+     "reason": "P5b [p.27] 每次比较 four 次评估"
+    },
+    "G18": {
+     "score": 2,
+     "reason": "P3b 所有基线提示词未报告；P5 指出锦标赛赛制、一致性度量等未给"
+    },
+    "G19": {
+     "score": 2,
+     "reason": "M4/M4b [p.21] 四类评分器全部正确，并特别区分 Gemini 3 Flash 与 3.5 Flash"
+    },
+    "G20": {
+     "score": 2,
+     "reason": "E1c [p.21] 同轮评分、存档基础分+同轮差值"
+    },
+    "G21": {
+     "score": 2,
+     "reason": "E1 [p.21] 各基准指标与 Avg 不加权平均均正确"
+    },
+    "G22": {
+     "score": 2,
+     "reason": "E3 [p.8] 三次独立运行均值+跨种子标准差；E1b [p.21] 单 rollout 与 oracle 为池上期望无需重采样"
+    },
+    "G23": {
+     "score": 2,
+     "reason": "E3 指出种子值未给；E4 主表无正式显著性检验 [p.7]，E4b 附录 I 明说不构成统计显著性 [p.26]"
+    },
+    "G24": {
+     "score": 2,
+     "reason": "select 51.6(+4.4)/53.7(+4.1) [p.8]，明确区分摘要 6.2/6.4 为含修订；虽未写修订 Avg 53.4，但给出 56.1 且区分清楚"
+    },
+    "G25": {
+     "score": 1,
+     "reason": "提出零成本复算单 rollout 与 oracle，但未引用论文 p.22 '无需运行模型即可复现'的说法，也未提图 6"
+    },
+    "G26": {
+     "score": 1,
+     "reason": "R2/R2b/R2c/R2d [p.27] 给出 $1.44/$3.92、cache-read 计价、$5.40/$13.06；缺'修订约为选择 3 倍'"
+    },
+    "G27": {
+     "score": 2,
+     "reason": "R2d [p.27] 多数投票、Best-of-N、CLI 为估算，聚合基线未计量"
+    },
+    "G28": {
+     "score": 2,
+     "reason": "R2e [p.1] 超过 $100,000；A2b 约 26,000 条；并强调必须用发布池"
+    },
+    "G29": {
+     "score": 2,
+     "reason": "P4d [p.21] 三个 CLI 版本正确；X1 [p.23] 指出 Opus 在 JobBench/SB-2 的 CLI 部署明显变弱（与 p.7/App G 一致）"
+    },
+    "G30": {
+     "score": 1,
+     "reason": "T2b [p.10] 给出 Opus resolver only 54.3、challenger only 52.6、单上下文损 0.8，并注明含修订；无技能只给了 Flash 51.3，未给 Opus 53.8/55.3"
+    },
+    "G31": {
+     "score": 2,
+     "reason": "D2d/D3c/P2c/M3b [p.26]：75/25 划分、固定种子值未给、K=3→5、十分钟、C 10 轮/D 8 轮、APEX 排除文件交付任务、SB-2 只含模板与财务模型；§4 指出图 4 留出子集与表 2 不可比"
+    },
+    "G32": {
+     "score": 2,
+     "reason": "T1h [p.1] 图 1 为含修订，图注 APEX +6.7、WSB +8.9"
+    }
+   },
+   "misreadings": [],
+   "spot_checks": [
+    {
+     "claim": "select Flash Avg 51.6，WSB 62.0±0.9，+4.4 [T1, p.8]",
+     "page": 8,
+     "found": true,
+     "consistent": true
+    },
+    {
+     "claim": "select Opus Avg 53.7，41.2±0.7/65.0±0.5/83.0±0.4/33.4±1.2/46.1±0.8 [T1e, p.8]",
+     "page": 8,
+     "found": true,
+     "consistent": true
+    },
+    {
+     "claim": "WorkBuddy 只跑 code/office/web 80/50/70，不跑 security [D3, p.20]",
+     "page": 20,
+     "found": true,
+     "consistent": true
+    },
+    {
+     "claim": "Gemini CLI 0.46.0、Claude Code 2.1.246、Codex 0.149.1 [P4d, p.21]",
+     "page": 21,
+     "found": true,
+     "consistent": true
+    },
+    {
+     "claim": "APEX/JobBench 判官 Gemini 3 Flash；WSB Claude Code+Opus 4.8 [M4, p.21]",
+     "page": 21,
+     "found": true,
+     "consistent": true
+    },
+    {
+     "claim": "select 每任务 Flash $1.44、Opus $3.92；缓存全价 $5.40/$13.06；86–91% 命中 [R2/R2b/R2c, p.27]",
+     "page": 27,
+     "found": true,
+     "consistent": true
+    },
+    {
+     "claim": "LLM-as-a-Verifier 每次比较 four 次评估 [P5b, p.27]",
+     "page": 27,
+     "found": true,
+     "consistent": true
+    },
+    {
+     "claim": "temperature zero 仅出现在附录 A 离线声明分析 [M2b, p.19]",
+     "page": 19,
+     "found": true,
+     "consistent": true
+    },
+    {
+     "claim": "18 个技能：6 evidence/4 resolver/3 challenger/5 revision [P2b, p.24]",
+     "page": 24,
+     "found": true,
+     "consistent": true
+    },
+    {
+     "claim": "自进化 K=3 后 K=5，脚本十分钟上限，C 十轮 D 八轮 [P2c/M3b, p.26]",
+     "page": 26,
+     "found": true,
+     "consistent": true
+    },
+    {
+     "claim": "消融 Opus resolver only 54.3 / challenger only 52.6 / 两者 56.1 [T2b, p.10]",
+     "page": 10,
+     "found": true,
+     "consistent": true
+    },
+    {
+     "claim": "生成 rollout 池成本超过 $100,000；约 26,000 条 [R2e/A2b, p.1]",
+     "page": 1,
+     "found": true,
+     "consistent": true
+    }
+   ],
+   "wrong_claims": [],
+   "gate_pass": true,
+   "total": 60,
+   "max": 64,
+   "summary": "覆盖面最全：32 项里 28 项满分，4 项半分（算法 1/交付上下文、p.22 池可复现的明确引用、修订成本约 3 倍、Opus 无技能/单上下文 Avg）。select 和修订分得清楚，未报告项都明确标出，没有命中误读陷阱。G2/G3 的未报告判断只写了一部分。抽查 12 条都与原文一致，没有发现错误声明。门槛满足：有就绪度结论，带页码设置值远超 15 条，没有 M1–M3。"
+  },
+  "Y": {
+   "items": {
+    "G1": {
+     "score": 2,
+     "reason": "§2.2 p.7/p.20 同模型、thinking level high，正确"
+    },
+    "G2": {
+     "score": 1,
+     "reason": "§3 G5 指出模型快照/model ID 未写；但没有明确指出 API 调用日期区间未报告"
+    },
+    "G3": {
+     "score": 1,
+     "reason": "§0 与 §3 G5/G13 指出温度未报告；但没提 top-p，也没指出唯一给出的是附录 A 离线分析的 temperature zero"
+    },
+    "G4": {
+     "score": 2,
+     "reason": "§3 G6 明确轮数/超时/上下文上限未报告，并引 p.5 停止由模型自行判断"
+    },
+    "G5": {
+     "score": 2,
+     "reason": "§2.1 五个基准、APEX v1.0 [p.6–7/p.20]、WSB 100 题 Lite [p.20]"
+    },
+    "G6": {
+     "score": 2,
+     "reason": "§2.1 Table 1 [p.7] 480/100/200/321/65"
+    },
+    "G7": {
+     "score": 2,
+     "reason": "§2.1 [p.20] 80/50/70、不跑 security 及原因"
+    },
+    "G8": {
+     "score": 2,
+     "reason": "N=10 [p.7]，冻结后所有方法共用同一池 [p.21/p.7]"
+    },
+    "G9": {
+     "score": 2,
+     "reason": "§2.1 [p.20] 四类脚手架正确"
+    },
+    "G10": {
+     "score": 2,
+     "reason": "§2.1 [p.22] HF/GitHub 链接，池不含任务描述/工作区/rubric/参考答案"
+    },
+    "G11": {
+     "score": 2,
+     "reason": "§2.2 [p.21] pi coding agent（MIT）、LiteLLM、只读无网络仅输出目录可写"
+    },
+    "G12": {
+     "score": 2,
+     "reason": "§2.2 [p.24/p.21] 七个工具、write/edit 限输出目录；表格渲染为 cell 级文本"
+    },
+    "G13": {
+     "score": 2,
+     "reason": "§2.2 [p.25 Table 6] 18 个技能 6/4/3/5，只给名称/适用交付物/脚本名"
+    },
+    "G14": {
+     "score": 2,
+     "reason": "§2.2 [p.20 Alg.1, p.21, p.6] 并发互不可见、新上下文裁决、交付在裁决上下文中继续，全部覆盖"
+    },
+    "G15": {
+     "score": 2,
+     "reason": "§3 G1 明确 protocol 指令全文不在论文中"
+    },
+    "G16": {
+     "score": 2,
+     "reason": "§2.4 [p.21] 五种基线定义正确，含 agentic verifier 同沙箱同工具单一指令无协议无技能"
+    },
+    "G17": {
+     "score": 2,
+     "reason": "§2.4 [p.27] LaaV 每次比较评估 4 次"
+    },
+    "G18": {
+     "score": 2,
+     "reason": "§3 G14 指出 MV 一致性度量、BoN/锦标赛提示词与对阵结构等未报告"
+    },
+    "G19": {
+     "score": 2,
+     "reason": "§2.3 [p.21] 四类评分器正确，并在 I5 区分 Gemini 3 Flash 与 3.5 Flash"
+    },
+    "G20": {
+     "score": 2,
+     "reason": "§2.3 [p.21 L1397–1399] 同轮评分、存档 base 分+同轮差值"
+    },
+    "G21": {
+     "score": 2,
+     "reason": "§2.3 指标与 §1 Avg 不加权平均 [p.8/p.21] 正确"
+    },
+    "G22": {
+     "score": 2,
+     "reason": "§1 三次独立验证器运行、跨 seed 标准差，single/oracle 为池上期望无 ± [p.7, p.21]"
+    },
+    "G23": {
+     "score": 1,
+     "reason": "§3 G12 只问'有没有固定 seed'，没有明确说种子取值未报告；没说论文未做显著性检验，也没提附录 I 明说不确立显著性"
+    },
+    "G24": {
+     "score": 1,
+     "reason": "select 51.6/53.7 [p.8] 正确，+4.4/+4.1 也提到，并用图 1 区分修订；但没给修订 Avg 53.4/56.1 或 6.2/6.4"
+    },
+    "G25": {
+     "score": 2,
+     "reason": "§0/§6.2 [p.22 L1436–1438] 明说单 rollout 与 oracle 两行及 Fig.6 只依赖池子即可复现"
+    },
+    "G26": {
+     "score": 1,
+     "reason": "§2.4/§0 [p.27] $1.44/$3.92、cache-read 计价、$5.40/$13.06 正确；缺'修订约为选择 3 倍'"
+    },
+    "G27": {
+     "score": 0,
+     "reason": "没有提到多数投票/best-of-N/CLI 成本是估算、聚合基线未计量"
+    },
+    "G28": {
+     "score": 1,
+     "reason": "I1 提到约 26,000 条 [p.1] 并建议用池；没有提到生成成本超过 $100,000"
+    },
+    "G29": {
+     "score": 1,
+     "reason": "§2.2 [p.21] 三个 CLI 版本正确；没提 Opus 在 JobBench（以及 Claude Code 在 SB-2）回落到单 rollout 水平"
+    },
+    "G30": {
+     "score": 1,
+     "reason": "§4 提到 resolver-only 54.3 / challenger-only 52.6、单上下文损 0.8、去技能 Opus APEX 47.5→42.0，并注明含修订；缺 Opus 无技能 Avg 53.8、单上下文 55.3"
+    },
+    "G31": {
+     "score": 0,
+     "reason": "完全没有覆盖自进化实验设置（划分、K、轮数、10 分钟、子集差异）"
+    },
+    "G32": {
+     "score": 2,
+     "reason": "§1 [p.1] 图 1 是含修订（54.8/65.4/…），不是 select；只给了绝对值，没给 +6.7/+8.9，但等价且正确"
+    }
+   },
+   "misreadings": [],
+   "spot_checks": [
+    {
+     "claim": "Table 2 Flash select 53.3±1.2/62.0±0.9/77.8±1.4/31.5±2.4/33.5±1.8，Avg 51.6 (p.8)",
+     "page": 8,
+     "found": true,
+     "consistent": true
+    },
+    {
+     "claim": "逐格最强选择基线：Flash SB-2 30.9 (Agentic)，JobBench 32.4 (MV)；Opus APEX 38.4 (BoN/Tour) (p.8)",
+     "page": 8,
+     "found": true,
+     "consistent": true
+    },
+    {
+     "claim": "Figure 1 右图为含修订 54.8/65.4/78.2/32.2/36.2 (p.1)",
+     "page": 1,
+     "found": true,
+     "consistent": true
+    },
+    {
+     "claim": "WSB 用 100 题 Lite；WorkBuddy 80/50/70 不跑 security (p.20)",
+     "page": 20,
+     "found": true,
+     "consistent": true
+    },
+    {
+     "claim": "运行时基于 pi coding agent（MIT），Claude 经本地 LiteLLM (p.21)",
+     "page": 21,
+     "found": true,
+     "consistent": true
+    },
+    {
+     "claim": "LaaV 每次比较评估 4 次 (p.27)",
+     "page": 27,
+     "found": true,
+     "consistent": true
+    },
+    {
+     "claim": "成本 $1.44/$3.92，缓存全价 $5.40/$13.06，86–91% 命中 (p.27)",
+     "page": 27,
+     "found": true,
+     "consistent": true
+    },
+    {
+     "claim": "去技能后 Opus APEX 47.5→42.0（Table 4，含修订）(p.23)",
+     "page": 23,
+     "found": true,
+     "consistent": true
+    },
+    {
+     "claim": "Fig.5 分箱 154+139+108+15=416，增益 0.6/4.5/7.7/9.4 (p.10)",
+     "page": 10,
+     "found": true,
+     "consistent": true
+    },
+    {
+     "claim": "App A 434 题、917+775=1,692 条声明 (p.19)",
+     "page": 19,
+     "found": true,
+     "consistent": true
+    },
+    {
+     "claim": "发布池可复现 single、oracle 两行与 Fig.6，无需运行模型 (p.22)",
+     "page": 22,
+     "found": true,
+     "consistent": true
+    },
+    {
+     "claim": "技能库 'listed in full ... in Appendix H' (p.5)",
+     "page": 5,
+     "found": true,
+     "consistent": true
+    }
+   ],
+   "wrong_claims": [
+    {
+     "quote": "中。主要影响成本：没有缓存时单价约 ×3.4",
+     "paper": "p.27：selection costs $1.44 (Flash) / $3.92 (Opus)；cached tokens 按全价时为 $5.40 / $13.06。这是报告自己的推算，不是论文数字：Flash 为 3.75 倍，Opus 为 3.33 倍，'约 ×3.4' 只对得上 Opus（小幅不精确）"
+    }
+   ],
+   "gate_pass": true,
+   "total": 52,
+   "max": 64,
+   "summary": "主实验设置写得准确完整，协议、算法 1、池可复现性写得比 X 更到位。但漏了几块：完全没写自进化实验设置（G31），没写估算成本口径（G27），$100,000 池成本、Opus CLI 回落、显著性/种子值未报告、修订 Avg 等只写了一部分或没写。没有命中误读陷阱。G2/G3 的未报告判断只写了一部分。抽查 12 条都与原文一致，只有一处自行推算的倍数（×3.4）不够精确。门槛满足。"
+  }
+ },
+ "comparison": {
+  "better": "X",
+  "key_differences": [
+   "X 覆盖了自进化实验的全部设置，并点明图 4 留出子集与表 2 不可比（G31）；Y 完全没写。",
+   "X 写明多数投票/best-of-N/CLI 成本是估算、聚合基线未计量（G27），也写了 $100,000 池成本（G28）；Y 都没写。",
+   "X 明确写出附录 A 的 temperature zero 只用于离线分析、种子值未报告、附录 I 不确立显著性（G3/G23）；Y 没有区分这些。",
+   "Y 对协议执行细节（算法 1、交付在裁决上下文中继续）和'池可复现 single/oracle 及 Fig.6'（p.22）的引用比 X 更完整（G14/G25）。",
+   "两份报告都没有误读陷阱，抽查都准确；Y 只有一处推算倍数不够精确。X 总分 60/64，Y 总分 52/64。"
+  ]
+ }
+}

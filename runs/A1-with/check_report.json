@@ -1,0 +1,42 @@
+{
+ "material_missing_objects": [],
+ "material_truncated": false,
+ "rows": 66,
+ "items_covered": 26,
+ "items_total": 26,
+ "status_counts": {
+  "partial": 22,
+  "reported": 36,
+  "not_reported": 2,
+  "conflicting": 6
+ },
+ "item_status": {
+  "M1": "partial",
+  "M2": "partial",
+  "M3": "not_reported",
+  "M4": "partial",
+  "D1": "reported",
+  "D2": "reported",
+  "D3": "reported",
+  "D4": "reported",
+  "P1": "reported",
+  "P2": "reported",
+  "P3": "partial",
+  "P4": "partial",
+  "P5": "reported",
+  "P6": "reported",
+  "E1": "partial",
+  "E2": "partial",
+  "E3": "partial",
+  "E4": "not_reported",
+  "R1": "partial",
+  "R2": "reported",
+  "R3": "partial",
+  "A1": "reported",
+  "A2": "reported",
+  "T1": "reported",
+  "T2": "reported",
+  "X1": "reported"
+ },
+ "problems": []
+}

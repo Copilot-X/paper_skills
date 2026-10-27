@@ -1,0 +1,15 @@
+{
+  "seed": 23,
+  "mapping": {
+    "X": "A2-with",
+    "Y": "A2-without"
+  },
+  "started_at": "2026-10-27T11:10:47+00:00",
+  "grader_inputs": [
+    "acceptance.md",
+    "paper.txt",
+    "report_X.md",
+    "report_Y.md",
+    "topic_card.md"
+  ]
+}

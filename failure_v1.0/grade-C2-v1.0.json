@@ -1,0 +1,180 @@
+{
+ "reports": {
+  "X": {
+   "items": {
+    "E1": {
+     "score": 1,
+     "reason": "明确指出只有 6 页、在 p.6 §4.1 第一句 \"APEX-Agents (version 1.0) (Vidgen et al.,\" 处截断、无参考文献、无附录，并列出正文引用但缺失的 Table 2/Table 5、附录 A/B/C/F/H，依据充分且与 paper.txt 一致。"
+    },
+    "E2": {
+     "score": 1,
+     "reason": "未出现 480/100/200/321/65、thinking high、三个种子、Gemini 3 Flash 判官、pi、LiteLLM、18 个技能、$1.44/$3.92、CLI 版本等 p.7 之后的内容；N=10 明确标为由案例分析推断。GitHub/HuggingFace 地址在 paper.txt 中没有，但报告注明取自 PDF 超链接注释、内容未确认；经核实，截断版 PDF 的链接注释确实含这两个地址，属于本文件内容，不算编造。"
+    },
+    "E3": {
+     "score": 0,
+     "reason": "核查表大体使用 not_in_material，但五类必查项中有几项被直接写成“(论文)未报告”：§0 阻断项 2 写“主表用什么判官未报告”（E2 行也只标 partial，§7 的缺失清单里没有 grader）；§6 写“论文未报告方差 [E3]”，与 E3 行的 not_in_material 矛盾；成本也写成“验证器每任务成本未报告”“没有给验证器成本”。这正是本项要防的混淆（判官与种子在完整版中有报告），按严格标准不通过。"
+    },
+    "E4": {
+     "score": 0,
+     "reason": "T1c 把“Flash +6.2，Opus +6.4（Table 2）”标为 reported，没有说明这只是摘要/引言的声称、Table 2 不在文件中、无法核实；还在 §4.5 称 6.2 与图 1 推算的 6.16“一致”，而 6.4（Opus）完全无法核实却未做任何标注。只区分了“含修订 vs 选择”，没有做“未能核实”的标注。"
+    },
+    "E5": {
+     "score": 0,
+     "reason": "正确提取并带页码的有：同一模型兼作生成器与验证器 [p.3]、Gemini 3.5 Flash/Claude Opus 4.8 [p.3]、十路池仅用于案例分析 [p.2]、所有方法共用同一池 [p.3]、resolver/challenger 分上下文 [p.5]、APEX-Agents v1.0 [p.6]。但全文没有提取“验证器无参考答案/评分细则”这一关键设置（p.1、p.2、p.3 均有原文），要点不全。"
+    },
+    "E6": {
+     "score": 1,
+     "reason": "给出获取 arXiv 2610.00972 完整版，优先核对 §4.1、Table 2、附录 A/C/F/H、代码仓库与数据集卡片；对未见内容只写查找建议（附录 B/F 的主题取自 p.4/p.6 可见文字）。未点名表 1、附录 D/K，但已覆盖 §4.1、表 2 与附录 H 这几个关键位置。"
+    },
+    "E7": {
+     "score": 1,
+     "reason": "就绪度写“材料不完整，无法判定”，并区分可判定/需完整版两部分，与可见证据相称。"
+    },
+    "E8": {
+     "score": 0,
+     "reason": "评分材料中只有 C2 的报告 X，没有 C1 报告可对比，报告本身也未对 C1/C2 一致性作出说明，无法确认一致，不给分。"
+    }
+   },
+   "misreadings": [
+    {
+     "id": "E3-grader-未报告",
+     "quote": "评测 grader 的身份和版本：主结果只说由 \"external grader\" 打分 [E1, p.3]，Figure 2 用的是 \"benchmark's rubric grades\" [E2, p.2]，主表用什么判官未报告。",
+     "critical": true
+    },
+    {
+     "id": "E3-方差-论文未报告",
+     "quote": "成功阈值（假设，因为论文未报告方差 [E3]）",
+     "critical": true
+    },
+    {
+     "id": "E3-成本-未报告",
+     "quote": "验证器每任务成本未报告；每个任务要运行三个上下文并执行代码，可能明显高于单次 judge ／ 原文只给了生成池的总成本（超过 $100,000，约 26,000 条 rollout）[R2, p.1]，没有给验证器成本。",
+     "critical": false
+    },
+    {
+     "id": "E3-算力/模型版本-未报告",
+     "quote": "8×H200 | 未报告算力 [R1] ／ 模型可以对上，但版本和快照未报告。",
+     "critical": false
+    },
+    {
+     "id": "E4-摘要数字当作已报告",
+     "quote": "T1c | 主结果 | reported | 含修订时，五个基准平均相对单 rollout 的提升：Flash +6.2，Opus +6.4（Table 2） | p.3",
+     "critical": true
+    },
+    {
+     "id": "E4-以图1推算替代表2核实",
+     "quote": "五个基准的提升平均为 6.16，与摘要的 6.2（Flash）一致。",
+     "critical": false
+    }
+   ],
+   "spot_checks": [
+    {
+     "claim": "Figure 1 的 Flash 分基准数字：APEX 48.1/49.8/54.8，WSB 56.5/60.4/65.4，WorkBuddy 73.2/75.3/78.2，SB-2 27.3/30.2/32.2，JobBench 30.9/31.9/36.2",
+     "page": 1,
+     "found": true,
+     "consistent": true
+    },
+    {
+     "claim": "图注：with revision 时 APEX +6.7、WSB +8.9",
+     "page": 1,
+     "found": true,
+     "consistent": true
+    },
+    {
+     "claim": "公开约 26,000 条 rollout，成本超过 $100,000",
+     "page": 1,
+     "found": true,
+     "consistent": true
+    },
+    {
+     "claim": "含修订平均提升 Flash +6.2、Opus +6.4（Table 2）",
+     "page": 3,
+     "found": true,
+     "consistent": true
+    },
+    {
+     "claim": "技能演化：APEX-Agents +6.8、SpreadsheetBench 2 +3.7；空库演化优于人工库",
+     "page": 3,
+     "found": true,
+     "consistent": true
+    },
+    {
+     "claim": "Opus×APEX 十路池案例：34% 共识值错误、74% 有正确候选、47% 众数正确",
+     "page": 4,
+     "found": true,
+     "consistent": true
+    },
+    {
+     "claim": "APEX-Agents (version 1.0)，文本在 §4.1 中途截断",
+     "page": 6,
+     "found": true,
+     "consistent": true
+    },
+    {
+     "claim": "生成器与验证器同为 Gemini 3.5 Flash / Claude Opus 4.8",
+     "page": 3,
+     "found": true,
+     "consistent": true
+    },
+    {
+     "claim": "所有比较方法使用同一个 rollout 池",
+     "page": 3,
+     "found": true,
+     "consistent": true
+    },
+    {
+     "claim": "选择模式直接原样返回 adjudication 选出的 base；adjudication 在新上下文中进行",
+     "page": 6,
+     "found": true,
+     "consistent": true
+    },
+    {
+     "claim": "Figure 3 写 resolver 处理 high entropy、challenger 处理 low entropy，正文按 H=0/H>0 划分",
+     "page": 4,
+     "found": true,
+     "consistent": true
+    },
+    {
+     "claim": "arXiv 2610.00972v1，1 Oct 2026",
+     "page": 1,
+     "found": true,
+     "consistent": true
+    },
+    {
+     "claim": "Table 5 汇总 harness 组成（材料中缺失）",
+     "page": 5,
+     "found": true,
+     "consistent": true
+    },
+    {
+     "claim": "GitHub/HuggingFace 地址取自 PDF 超链接注释（paper.txt 中没有；经核实截断版 PDF 的注释中有这两个地址）",
+     "page": 1,
+     "found": false,
+     "consistent": true
+    }
+   ],
+   "wrong_claims": [
+    {
+     "quote": "主表用什么判官未报告。",
+     "paper": "p.3 只写 \"judged by an external grader\"；判官配置应在截断的 §4.1 之后，本文件无法判断论文是否报告，只能写“材料缺失”，不能写“未报告”。"
+    },
+    {
+     "quote": "成功阈值（假设，因为论文未报告方差 [E3]）",
+     "paper": "paper.txt 只有 p.1–6，止于 §4.1 第一句，无法判断论文是否报告方差；报告自己的 E3 行也标为 not_in_material，前后矛盾。"
+    },
+    {
+     "quote": "T1c | reported | ……Flash +6.2，Opus +6.4（Table 2）",
+     "paper": "p.1、p.3 确有这两个数字，但 Table 2 不在 paper.txt 中，6.4 无法核实；报告却标为 reported，未注明“未能核实”。"
+    },
+    {
+     "quote": "PDF 超链接注释指向 github.com/google-research/veriharness 和 huggingface.co/datasets/caiqizh/veriharness",
+     "paper": "paper.txt 只有 \"Code / Dataset / veriharness.com\" 字样，没有这两个地址（截断版 PDF 的链接注释中能找到，所以不算编造）。"
+    }
+   ],
+   "gate_pass": false,
+   "total": 4,
+   "max": 8,
+   "summary": "报告正确识别材料被截断（E1），没有编造 p.7 之后的内容（E2），就绪度写“无法判定”（E7），恢复建议具体（E6），抽查的 13 条页码与数字均与原文一致。但有两个必须项不通过：E3——判官、方差、成本在正文多处被写成“(论文)未报告”，与核查表的 not_in_material 自相矛盾；E4——6.2/6.4 被标为 reported，没有标注“仅摘要声称、结果表缺失、未能核实”。另外 E5 漏掉了“无参考答案/评分细则”；E8 因没有 C1 报告无法确认。按失败判定，C 失败。"
+  }
+ }
+}
