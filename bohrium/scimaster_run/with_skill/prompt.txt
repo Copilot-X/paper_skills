@@ -1,0 +1,9 @@
+我准备复现 upload/skill_pack.zip 里的 veriharness_2610.00972v1.pdf 这篇论文，把它作为我课题的对比基线：先复现它的选择（select）结果，再在我的系统上和我的方法比较。
+
+我的课题与条件：我做 LLM Agent 长程执行降幻觉方向；只能调用闭源前沿模型 API（Claude / Gemini / GPT 一类），不能训练或改权重；有一台 8×H200 服务器可跑开源模型推理；单次复现预算约 200 美元 API 费用、一周工时；不能联系作者之前就开工，可以查公开代码仓库。
+
+请帮我把复现所需的实验配置理清楚：论文给出了哪些设置、哪些没写、哪些前后不一致；哪些缺口最可能让我复现不出来、去哪补；以及我该怎么先做一个最小复现。
+
+要求：只依据这篇论文本身判断，不要联网下载代码或其他资料（代码仓库、被引文献可以作为"后续去哪查"的建议列出）。请输出一份中文报告；关键设置要能让我回到原文核对（写出页码）。
+
+【使用 Skill】压缩包里的 repro-config-auditor/ 是一个"复现配置核查"Skill。请先完整阅读 repro-config-auditor/SKILL.md 和 references/ 下的文件，然后严格按 SKILL.md 的 6 个步骤执行：用它自带的 scripts/extract_text.py、scan_config.py 处理 PDF，逐项填 audit.jsonl，用 scripts/check_audit.py 做门禁（必须带 --report 再跑一次直到退出码 0），最后写 report.md。在最终回答里请告诉我门禁脚本最终的退出码和 problems 数量。

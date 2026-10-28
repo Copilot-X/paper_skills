@@ -4,7 +4,7 @@
 >
 > 模型：claude-opus-5-5（effort high）｜ 宿主：Claude Code 2.1.309 ｜ 论文：VeriHarness（arXiv:2610.00972v1，CC BY 4.0）
 >
-> 一条命令核对本文所有数字：`python3 tools/verify_article.py`（只用 Python 标准库，44 项检查全部通过）
+> 一条命令核对本文所有数字：`python3 tools/verify_article.py`（只用 Python 标准库，检查全部通过）
 
 ---
 
@@ -38,6 +38,8 @@
 
 两组方向一致：Skill 稳定地多找到了三类最容易让复现跑偏的信息（§4.1）。代价是两组合计耗时 +36%、估算成本 +47%（§4.4）。不加载 Skill 在"协议执行细节"上两次都更好，这是方法的盲区（§4.3）。
 
+**在玻尔科学空间里真实跑了一次。** 我把同一份提示词交给玻尔的 scimaster 智能体，带 Skill 和不带 Skill 各跑一次（Photon 支付，未动现金），同样用冻结标准盲评：**54 / 51**（满分 64）。差距比本地小，"论文没写什么"6 项仍是 **12 / 8**。过程中踩到的坑（沙箱没有 PyMuPDF、读文件工具会脱敏输出、计费命令要显式确认等）和经验见 §6。
+
 ---
 
 ## 0.5 阅读约定：三种陈述分开标记
@@ -45,7 +47,7 @@
 | 标记 | 含义 | 去哪核对 |
 |---|---|---|
 | **【原文】** | 论文的逐字内容 | [`paper/veriharness_excerpts.md`](paper/veriharness_excerpts.md)，按页码查找 |
-| **【AI】** | 模型的原始输出，未经我改写 | [`runs/`](runs/)（报告、核查表、门禁结果）和 [`grades/`](grades/)（盲评会话的输出） |
+| **【AI】** | 模型的原始输出，未经我改写 | [`runs/`](runs/)（门禁结果与运行记录）、[`grades/`](grades/)（盲评会话的输出）、[`bohrium/scimaster_run/`](bohrium/scimaster_run/)（玻尔里两次运行的完整报告） |
 | **【判断】** | 我基于前两者的推理或归纳，论文本身没有这么说 | 正文中标注；涉及数字的，都能用 `tools/verify_article.py` 复算 |
 
 这三类的边界在产物层面也由机器检查，不只靠措辞：核查表里 `reported` 状态的行必须带逐字引文和页码，`value` 里的每个数字必须出现在引文中，门禁脚本会强制检查（§2.3）。
@@ -136,7 +138,7 @@
 
 > 复现就绪度：补齐 4 项后可以复现。复现 select 有一个很大的便利：作者公开了全部 rollout 池，每个 rollout 都附有基准判官的存档分数 [A2, p.22]……
 
-完整报告见 [`runs/A1-with/report.md`](runs/A1-with/report.md)。核查表共 66 行、26/26 项，门禁结果 [`check_report.json`](runs/A1-with/check_report.json) 中 problems = 0。核查表正文因材料容量限制没有收录。不加载 Skill 那组的报告见 [`runs/A1-without/report.md`](runs/A1-without/report.md)。
+本地运行的核查表共 66 行、26/26 项，门禁结果 [`check_report.json`](runs/A1-with/check_report.json) 中 problems = 0。**本地 A1 两份报告的全文因材料容量限制没有收录**（只留门禁结果、运行记录和盲评记录），所以上面这段摘录无法在包内逐字核对。可逐字核对的完整报告是玻尔里那一组：带 Skill 见 [`bohrium/scimaster_run/with_skill/report.md`](bohrium/scimaster_run/with_skill/report.md)，不带见 [`without_skill/report.md`](bohrium/scimaster_run/without_skill/report.md)，对比见 §6。
 
 ### 3.3 公平对照怎么做的
 
@@ -239,28 +241,74 @@
 
 ---
 
-## 6. 玻尔科学空间：一次 PDF 解析实践与对比
+## 6. 玻尔科学空间：真实运行一次，以及踩到的坑和经验
 
-我用玻尔官方命令行工具 `bohr`（2.9.5），在玻尔平台上解析了同一份论文 PDF，并与本 Skill 默认使用的 PyMuPDF 提取结果对比。目的是看清单最依赖的信息（表格中的数字、附录中的设置）在两种提取方式下是否都能拿到。
+我用玻尔官方命令行工具 `bohr`（2.9.5）做了两件事：一是把同一份论文 PDF 交给 Uni-Parser 解析并与 PyMuPDF 对比（§6.1）；二是在玻尔的 scimaster 智能体里**把同一个任务真实跑两遍**，带 Skill 和不带 Skill（§6.2）。全部用 Photon 支付，没有动现金。
 
-- **配置方法**：
-  - 安装：`npm install @dptech-corp/bohr-cli`
-  - 登录：`bohr auth login --device`，用设备码在浏览器授权，凭据不经过第三方
-  - 解析：`bohr pdf parse --file veriharness_2610.00972v1.pdf --table 2 --textual 1 --sync --payment-source photon`
-  - 取结果：`bohr pdf result <token>`（免费）
-- **实际结果**（【AI】服务输出，摘录见 [`bohrium/uniparser_table2_excerpt.json`](bohrium/uniparser_table2_excerpt.json)）：28 页解析成功，计费 1.40 元，用 Photon 支付。
-- **对比发现**【判断】：
+### 6.1 PDF 解析：Uni-Parser 与 PyMuPDF 的对比
+
+- **做法**：`bohr pdf parse --file veriharness_2610.00972v1.pdf --table 2 --textual 1 --sync --payment-source photon`，再用 `bohr pdf result <token>` 取结果（免费）。28 页解析成功，计费 1.40 元，用 Photon 支付。摘录见 [`bohrium/uniparser_table2_excerpt.json`](bohrium/uniparser_table2_excerpt.json)。
 
 | | PyMuPDF（本 Skill 默认） | 玻尔 Uni-Parser |
 |---|---|---|
-| 表 2 | 一格一行，要靠表头顺序自己对列（见 `paper/veriharness_excerpts.md` 的 p.8 表格片段） | 直接还原成 Markdown 表格行：`\| VERIHARNESS (select) \| 51.6 \| \(53.3 \pm 1.2\) \| ...`，表头和 6 列对齐 |
-| 正文关键设置 | 我抽查的 13 项全部能找到 | 同样 13 项全部能找到（thinking level high、Gemini 3 Flash 判官、$1.44/$3.92、2.1.246 等） |
-| 标题与页眉 | 正确 | 小型大写标题识别成 "VERiHARNEs s"，Google 标志识别成 "Googlk e" |
+| 表 2 | 一格一行，要靠表头顺序自己对列 | 直接还原成 Markdown 表格行，表头和 6 列对齐 |
+| 正文关键设置 | 我抽查的 13 项全部能找到 | 同样 13 项全部能找到 |
+| 标题与页眉 | 正确 | 小型大写标题识别成 "VERiHARNEs s" |
 
-- **经验**：
-  1. 需要从表格里取"变体 × 基准"的数字时（比如本例的 select 行），Uni-Parser 的表格还原明显更省事，也更不容易对错列。
-  2. 但它的输出不能直接拿来做逐字引文校验：标题有 OCR 误差，数字带 LaTeX 包裹（`\(53.3 \pm 1.2\)`）。本 Skill 的门禁如果改用它的输出，需要先去掉 LaTeX 标记再匹配。这一点我**没有实现**。
-- **局限**：这只是一次解析对比。我没有在玻尔科学空间里用智能体完整运行本 Skill，因此不声称它在玻尔上的效果。
+- **经验**：要从表格里取"变体 × 基准"的数字时，Uni-Parser 更省事；但它的输出带 LaTeX 包裹（`\(53.3 \pm 1.2\)`）、标题有 OCR 误差，不能直接用于逐字引文校验。门禁改用它的输出需要先去掉 LaTeX 标记，我没有实现。
+
+### 6.2 在智能体里真实运行本 Skill
+
+**设置**（【AI】全部原始记录见 [`bohrium/scimaster_run/`](bohrium/scimaster_run/)）：
+
+- 智能体：scimaster-agent（云端沙箱），`bohr agents run --agent aDrseQKQj4QF --stream --yes --payment-source photon`。
+- 两次运行的任务文字相同（[不带 Skill](bohrium/scimaster_run/without_skill/prompt.txt)、[带 Skill](bohrium/scimaster_run/with_skill/prompt.txt)），论文是同一份 PDF。**唯一差别**：带 Skill 的把整个 `repro-config-auditor/` 目录打包上传，并在提示词末尾要求"按 SKILL.md 六步执行，告诉我门禁脚本的退出码"。
+- 不带 Skill 那次是我第一次尝试时跑的，中途我手动中断了本地进程，但云端任务继续跑完并留下了完整报告（25,950 字节）。我把它当作对照组，不是预先设计的实验，这一点要说明。
+
+**结果**：
+
+| | 带 Skill | 不带 Skill |
+|---|---|---|
+| 盲评总分（满分 64，§3 同一套冻结标准） | **54** | 51 |
+| 逐项比较（32 项） | 8 项更高 | 6 项更高 |
+| "论文没写什么"6 项小计（满分 12） | **12** | 8 |
+| 抽查带页码的说法 | 13/13 与原文一致 | 11/12，1 处不一致 |
+| 门槛 | 通过 | 通过 |
+
+盲评是用一个全新的 Claude Code 会话完成的（脚本 `tools/rca_grade_bohrium.py` 与 §3 的盲评同源，只改了读取哪两份报告，X/Y 随机，映射见 [`blinding.json`](bohrium/scimaster_run/blinding.json)，评分见 [`grade_blind.json`](bohrium/scimaster_run/grade_blind.json)，省略了抽查明细）。
+
+**我对云端那份"带 Skill"的结果做的核对**（不只信模型自报）：
+
+1. 云端自报门禁 `problems = 0`。我把它产出的 `paper.txt`、`audit.jsonl` 取回本地，用同一个 `check_audit.py` 重跑：退出码 0，81 行、26/26 项、problems = 0（[`check_report_local_recheck.json`](bohrium/scimaster_run/with_skill/check_report_local_recheck.json)）。
+2. 用另一份独立提取的论文文字（不是云端的那份）逐条检查 73 条引文：72 条逐字找到，1 条只是原文断行连字符的排版差异（"financial- model"），实质一致。
+3. 抽查新出现的数字（47.2、62.7、49.6、917、775、1,692、86 to 91%、约 70%）都在原文。
+
+**盲评发现的问题**（如实写出）：
+
+- 不带 Skill 的报告有一处数字错误：把 Opus 在 SB-2 上带修订的增益 +4.2 当成 select 增益，原文 select 是 +3.3（表 2，p.8）。
+- 带 Skill 的报告把 APEX 的 480 与 434 判成"前后不一致"，评分员认为偏重：表 1 的 480 是池内任务数，434 只是附录 A 的分析覆盖数。
+- 不带 Skill 的报告在 6 项上更好（工具列表、技能分类、delivery 在裁决上下文、基线定义、免费复算声明、缓存全价成本）。这与 §4.3 的盲区一致：清单没覆盖的协议细节，Skill 反而写得少。
+- 差距（+3）比本地两组（+6、+8）小。只有一次运行，不能据此说"在玻尔里效果更好或更差"。
+
+### 6.3 在玻尔里踩到的坑和经验
+
+下面每条都来自这次真实运行的记录（命令输出或智能体的运行流），不是事后推测。
+
+| # | 现象 | 原因或证据 | 怎么处理 |
+|---|---|---|---|
+| 1 | 登录后命令仍报未登录 | `bohr auth status` 显示 `refresh_required`，设备码 5 分钟过期，换过一次的码不能复用 | 无头环境用两步设备码：`bohr auth login --device --no-wait --json` 拿码，用户授权后 `bohr auth login --resume` |
+| 2 | `bohr agents run` 什么都没跑就退出 | 返回 `CONFIRMATION_REQUIRED`（"nothing ran and nothing was charged"） | 计费命令在非交互环境要显式 `--yes`；同时加 `--payment-source photon`，避免余额不足时回落到现金 |
+| 3 | 新建会话上传文件返回 503 | 上次不带 `--agent` 时 `Failed to ensure session` | 上传时带 `--agent <id> --session new`，一步完成建会话和上传 |
+| 4 | 沙箱里没有 PyMuPDF，Skill 的提取脚本报缺依赖 | 运行流里智能体先试 `pip install pymupdf`（装了一半），再装 `pypdf`，`extract_text.py` 走回退路径 | Skill 的回退设计起了作用，报告里也声明了。但云端与本地提取器不同，页码一致、文字略有差异，所以门禁要用**云端那份 paper.txt** 复核 |
+| 5 | 智能体读文件时看到 `[REDACTED_EMAIL_ADDRESS]`、`[REDACTED_PHONE_NUMBER]` | 运行流里它发现 Read 工具会对输出做隐私脱敏，而 `grep` 看到的原始文件是正常的 | 需要核对数字或引文时用 grep 或脚本，不要只信 Read 的显示。这与昨天 Uni-Parser 里表 2 末位变占位符是同一类现象 |
+| 6 | 云端报告里 `Algorithm 1` 被门禁列为"材料中缺失" | pypdf 提取丢了算法框；`check_report` 里 `material_missing_objects = ["Algorithm 1"]` | 这是提取差异，不是论文缺失；门禁的材料完整性检测在这里确实起作用 |
+| 7 | 只登记了 1 个交付物（report.md） | `bohr agents artifacts list` 只列出登记过的交付物，审计表等在工作区里 | 用 `bohr agents artifacts download --session <id> --path <相对路径> --out <本地>` 逐个取回 |
+| 8 | 中断本地进程后云端任务仍在跑 | 我杀掉本地进程后，云端任务仍然跑完并产出了报告（昨晚那次的 25,950 字节报告就是这样得到的） | 不要假设杀掉本地进程就停止了云端任务；到会话里用 `artifacts list` 取回结果 |
+| 9 | 想知道这次运行花了多少 Photon，算不出 | `bohr billing photon` 的账本里没有智能体运行的明细；账号下同时有别的任务在扣费，余额差不等于这次的成本 | 我**不声称**具体数字。只能说：现金余额全程没变（−2.64 元），支付走 Photon |
+
+**如果你也想在玻尔里跑 Skill**，我的建议顺序：先用一个极短的提示词探测智能体能否看到上传的文件（我第一次探测时它说没检测到文件，原因是当时上传 503 了）；再上传 Skill 压缩包和论文；提示词里明确要求"先读 SKILL.md、每一步用自带脚本、告诉我门禁退出码"；运行结束后**不要只看智能体的回答**，把 `audit.jsonl` 和 `paper.txt` 取回本地重跑门禁。
+
+**局限**：每个条件只有一次运行；对照组不是预先设计的；盲评员与被评运行同属一个模型家族；Photon 成本无法给出。因此这一节证明的是"Skill 能在玻尔智能体里被完整执行，产出能通过独立复核"，不是"玻尔里效果更好"。
 
 ---
 
@@ -268,7 +316,7 @@
 
 - **适用**：有实验的单篇实证、方法或基准论文，文字层可提取；要复现论文或拿它当基线时。
 - **不适用**：判断方法好不好；跨多篇综述；纯理论证明；读取图中的数值；运行论文代码。
-- **没验证过的**：只用一篇论文做了对照；盲评员和被评运行是同一个模型，可能有同源偏好；验收标准由我一人写定。
+- **没验证过的**：只用一篇论文做了对照；在玻尔里每个条件只跑了一次；盲评员和被评运行是同一个模型，可能有同源偏好；验收标准由我一人写定。
 - **刻意的取舍**：它宁可写"未报告，已查 p.x–p.y"，也不给出看起来完整的配置表。这会让报告不那么"漂亮"，但复现时最需要的正是这部分。
 
 ---
@@ -285,5 +333,5 @@
   - 对照实验的设计与运行；
   - 对评分结果的核对与归纳；
   - 本文写作。
-- **AI 输出**：`runs/` 下的报告和门禁结果是模型的原始输出，没有修改。`grades/` 和 `failure_v1.0/` 下的评分是盲评会话的原始输出：为控制材料容量，删去了误读陷阱清单和逐条抽查明细（保留抽查条数），其余字段原样保留。`bohrium/` 是玻尔服务输出的摘录。
-- **无法取得或未完成**：模型精确版本、代理的实际计费、非作者复跑，以及在玻尔科学空间里用智能体完整运行本 Skill。
+- **AI 输出**：`runs/` 下的门禁结果与运行记录、`bohrium/scimaster_run/` 下的两份完整报告是模型的原始输出，没有修改（本地 A1 两份报告全文因容量没有收录）。`grades/` 和 `failure_v1.0/` 下的评分是盲评会话的原始输出：为控制材料容量，删去了误读陷阱清单和逐条抽查明细（保留抽查条数），其余字段原样保留。`bohrium/` 是玻尔服务输出的摘录。
+- **无法取得或未完成**：模型精确版本、代理的实际计费、非作者复跑，以及玻尔里这次运行的 Photon 成本（账本无明细）。

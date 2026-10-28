@@ -127,5 +127,28 @@ with tempfile.TemporaryDirectory() as td:
     check("gate rejects a wrong page (M3)", '"row": "M3", "problem": "page=9' in probs)
     check("gate rejects an invented number (M4)", '"row": "M4", "problem": "value has numbers absent from quote' in probs)
 
+
+# 8. Bohrium scimaster run (README section 6.2)
+BR = "bohrium/scimaster_run"
+gb, mb = load(f"{BR}/grade_blind.json"), load(f"{BR}/blinding.json")["mapping"]
+rb = {mb[lab].split("-", 1)[1]: r for lab, r in gb["reports"].items()}
+check("Bohrium blind totals: with-Skill 54, without 51", (rb["skill"]["total"], rb["plain"]["total"]) == (54, 51), f"{rb['skill']['total']}/{rb['plain']['total']}")
+for cond in ("skill", "plain"):
+    check(f"Bohrium {cond}: items sum to total", sum(v["score"] for v in rb[cond]["items"].values()) == rb[cond]["total"])
+star = ("G2", "G3", "G4", "G15", "G18", "G23")
+sk, pl = sum(rb["skill"]["items"][k]["score"] for k in star), sum(rb["plain"]["items"][k]["score"] for k in star)
+check("Bohrium 'not reported' 6 items: 12 vs 8", (sk, pl) == (12, 8), f"{sk}/{pl}")
+up = [k for k in rb["skill"]["items"] if rb["skill"]["items"][k]["score"] > rb["plain"]["items"][k]["score"]]
+dn = [k for k in rb["skill"]["items"] if rb["skill"]["items"][k]["score"] < rb["plain"]["items"][k]["score"]]
+check("Bohrium per-item: 8 higher with Skill, 6 higher without", (len(up), len(dn)) == (8, 6), f"{len(up)}/{len(dn)}")
+check("Bohrium plain report has the +4.2 vs +3.3 error recorded", any("+4.2" in w["quote"] for w in rb["plain"]["wrong_claims"]))
+check("Bohrium skill report has no wrong claims", rb["skill"]["wrong_claims"] == [])
+lc = load(f"{BR}/with_skill/check_report_local_recheck.json")
+check("Bohrium with-Skill local gate recheck: 81 rows, 26/26, problems = 0", lc["rows"] == 81 and lc["items_covered"] == 26 and lc["problems"] == [])
+rep = (ROOT / BR / "with_skill/report.md").read_text(encoding="utf-8")
+check("Bohrium with-Skill report is the file that was graded (not empty)", len(rep.encode()) == 31010, f"{len(rep.encode())} bytes")
+check("Bohrium without-Skill report size 25,950 bytes", (ROOT / BR / "without_skill/report.md").stat().st_size == 25950)
+check("blinding file lists X/Y mapping only", set(mb) == {"X", "Y"})
+
 print(f"\n{'ALL PASS' if fails == 0 else f'{fails} FAILED'}")
 sys.exit(1 if fails else 0)

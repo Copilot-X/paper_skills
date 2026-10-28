@@ -1,0 +1,15 @@
+{
+  "seed": 28,
+  "mapping": {
+    "X": "BOH-plain",
+    "Y": "BOH-skill"
+  },
+  "started_at": "2026-10-28T01:51:41+00:00",
+  "grader_inputs": [
+    "acceptance.md",
+    "paper.txt",
+    "report_X.md",
+    "report_Y.md",
+    "topic_card.md"
+  ]
+}
